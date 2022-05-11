@@ -1,0 +1,5 @@
+homepage: "https://www.github.com/google/ga4-to-bigquery"
+documentation: "https://www.github.com/google/ga4-to-bigquery/README.md"
+versions:
+  - sha: 2e1c5c9ebd3c9eae8df35d18a0bf80f862c572ec
+    changeNotes: Initial release.
