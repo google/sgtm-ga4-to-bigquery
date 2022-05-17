@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-homepage: "https://www.github.com/google/ga4-to-bigquery"
-documentation: "https://www.github.com/google/ga4-to-bigquery/README.md"
+homepage: "https://www.github.com/google/sgtm-ga4-to-bigquery"
+documentation: "https://www.github.com/google/sgtm-ga4-to-bigquery/README.md"
 versions:
   - sha: 8f582ea3b2eebb0e28f20370006b22f98ba35050
     changeNotes: Initial release.
