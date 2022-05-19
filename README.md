@@ -52,7 +52,7 @@ rm -rf sgtm-ga4-to-bigquery && git clone https://github.com/google/sgtm-ga4-to-b
 *   **Use Consent Mode**
 	*   Note: It is not guaranteed that the tag's consent mode logic will always work since there is no API for server-side Google Tag Manager custom tags to check consent status. If there are changes to the GCS parameter values, the tag may not always respect consent mode.
 	*   If unchecked, then consent will not be checked and data will be written to BigQuery.
-	*   If checked, then the tag will check for the presence of the gcs query parameter. The behavior of the tag will change based on the value of the parameter. By default, the tag will assume consent has not been given, so the GCS URL parameter must be present with the value of either G101 or G111 to write anything to BigQuery.
+	*   If checked, then the tag will check for the presence of the gcs query parameter. The behavior of the tag will change based on the value of the parameter. By default, the tag will assume consent has not been given, so the GCS URL parameter must be present with the value of G111 to write anything to BigQuery.
         *   If the value is G111, then all parameters will be written to BigQuery.
         *   If the value is anything else, then nothing will be written to BigQuery.
 *   **BigQuery Settings**
