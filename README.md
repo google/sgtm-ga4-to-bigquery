@@ -1,5 +1,3 @@
-
-
 ## Google Analytics 4 to BigQuery Tag Template
 
 This is not an officially supported Google product.
@@ -25,15 +23,22 @@ rm -rf sgtm-ga4-to-bigquery && git clone https://github.com/google/sgtm-ga4-to-b
 
 
 
-1. Import the tag template from the template gallery.
-2. Enter the necessary settings for the tag.
-3. Set the tag’s trigger
+1. Import the template.tpl file as a custom tag in your server-side workspace.
+	*	Download template.tpl to your computer.
+	*	Open your GTM workspace.
+	*	Navigate to templates.
+	*	Click "New" under Tag Templates.
+	*	In the upper-righthand corner click the three dots and select import.
+	* Select template.tpl and save.
+2. Navigate to Tags, click new, click on tag configuration, and select GA4 to BigQuery under Custom.
+3. Enter the necessary settings for the tag.
+4. Set the tag’s trigger
     1. Create a new “Custom” trigger.
     2. Set the trigger to fire on all events.
     3. Name the trigger.
     4. Save the trigger.
-4. Save the tag.
-5. Publish the new tag.
+5. Save the tag.
+6. Publish the new tag.
 
 
 ## Tag Fields
@@ -45,12 +50,11 @@ rm -rf sgtm-ga4-to-bigquery && git clone https://github.com/google/sgtm-ga4-to-b
 *   **Write IP Address to BigQuery**
     *   Enter either true, false, or a variable that resolves to true or false. If any other value is entered, the IP address will not be written to BigQuery for each hit. If set to true, the tag will use the [getRemoteAddress() api](https://developers.google.com/tag-platform/tag-manager/server-side/api#getremoteaddress) to get the IP address where the request originated.
 *   **Use Consent Mode**
-    *   If checked, then the tag will check for the presence of the gcs query parameter. The behavior of the tag will change based on the value of the parameter. If there are changes to the parameter values, the tag may not always respect consent mode.
-        *   If the value is G100, then nothing will be written to BigQuery.
-        *   If the value is G101, then the following parameters will not be written to BigQuery: gclid, dclid, gbraid, wbraid, gclsrc, \_gl. Additional parameters can be added to the “marketingParams” array in the template tag code if necessary.
-        *   If the value is G110, then nothing will be written to BigQuery.
+	*   Note: It is not guaranteed that the tag's consent mode logic will always work since there is no API for server-side Google Tag Manager custom tags to check consent status. If there are changes to the GCS parameter values, the tag may not always respect consent mode.
+	*   If unchecked, then consent will not be checked and data will be written to BigQuery.
+	*   If checked, then the tag will check for the presence of the gcs query parameter. The behavior of the tag will change based on the value of the parameter. By default, the tag will assume consent has not been given, so the GCS URL parameter must be present with the value of either G101 or G111 to write anything to BigQuery.
         *   If the value is G111, then all parameters will be written to BigQuery.
-    *   If unchecked, then consent will not be checked and data will be written to BigQuery.
+        *   If the value is anything else, then nothing will be written to BigQuery.
 *   **BigQuery Settings**
     *   Enter the BigQuery project, dataset, and table IDs in their respective text boxes.
 
@@ -62,3 +66,5 @@ The following data is not collected:
 
 
 *   Geographic Information (country, region, city)
+*   Anything that relies on Google Signals data
+*   Dimensions that rely on parsing the user agent string will not be populated but the user agent string will be collected

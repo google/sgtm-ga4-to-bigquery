@@ -1,12 +1,20 @@
-﻿___INFO___
+﻿___TERMS_OF_SERVICE___
+
+By creating or modifying this file you agree to Google Tag Manager's Community
+Template Gallery Developer Terms of Service available at
+https://developers.google.com/tag-manager/gallery-tos (or such other URL as
+Google may provide), as modified from time to time.
+
+
+___INFO___
 
 {
   "type": "TAG",
   "id": "cvt_temp_public_id",
   "version": 1,
   "securityGroups": [],
-	"categories": ["ANALYTICS"]
-  "displayName": "Copy of Copy of Copy of Copy of GA4 to BigQuery",
+	"categories": ["ANALYTICS"],
+  "displayName": "GA4 to BigQuery",
   "brand": {
     "id": "brand_dummy",
     "displayName": "",
@@ -225,20 +233,9 @@ addEventCallback((containerId, eventData) => {
       let consented = false;
       if (data.requireConsent == false) {
         consented = true;
-      } else {
-        if (rows[0].gcs == 'G100') {
-          consented = false;
-        } else if (rows[0].gcs == 'G101') {
-          for (let i = 0; i < marketingParams.length; i++) {
-            rows[0][marketingParams[i]] = null;
-          }
-          consented = true;
-        } else if (rows[0].gcs == 'G110') {
-          consented = false;
-        } else if (rows[0].gcs == 'G111') {
-          consented = true;
-        }
-      }
+      } else if (rows[0].gcs == 'G111') {
+				consented = true;
+			}
       
       if ((rows[0].x_ga_measurement_id == data.measurementId ||
           data.measurementId == '*') && consented) {
@@ -398,6 +395,6 @@ setup: ''
 
 ___NOTES___
 
-Created on 5/10/2022, 3:04:55 PM
+Created on 5/19/2022, 11:46:16 AM
 
 
