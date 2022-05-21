@@ -111,17 +111,7 @@
   },
   {
     "mode":"NULLABLE",
-    "name":"app_instance_id",
-    "type":"STRING"
-  },
-  {
-    "mode":"NULLABLE",
     "name":"app_version",
-    "type":"STRING"
-  },
-  {
-    "mode":"NULLABLE",
-    "name":"app_instance_id",
     "type":"STRING"
   },
   {
@@ -365,7 +355,7 @@
             "mode":"NULLABLE",
             "name":"string_value",
             "type":"STRING"
-          }
+          },
           {
             "mode":"NULLABLE",
             "name":"float_value",
