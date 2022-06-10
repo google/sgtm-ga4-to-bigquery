@@ -132,7 +132,7 @@ addEventCallback((containerId, eventData) => {
     data.gtmOnFailure();
   }
 
-  if (skipWrite) {
+  if (!skipWrite) {
     // Check event is GA4
     if (isRequestMpv2()) {
       const rows = extractEventsFromMpv2();
