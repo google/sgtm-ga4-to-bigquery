@@ -9,6 +9,11 @@
     "name":"ip_address",
     "type":"STRING"
   },
+  {
+    "mode":"NULLABLE",
+    "name":"user_agent",
+    "type":"STRING"
+  },
 	{
     "mode":"NULLABLE",
     "name":"gclid",
