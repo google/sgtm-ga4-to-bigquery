@@ -119,17 +119,14 @@ addEventCallback((containerId, eventData) => {
   if (data.projectId == undefined) {
     log('Missing project ID.');
     skipWrite = true;
-    data.gtmOnFailure();
   }
   if (data.datasetId == undefined) {
     log('Missing dataset ID.');
     skipWrite = true;
-    data.gtmOnFailure();
   }
   if (data.tableId == undefined) {
     log('Missing table ID.');
     skipWrite = true;
-    data.gtmOnFailure();
   }
 
   if (skipWrite) {
@@ -241,17 +238,16 @@ addEventCallback((containerId, eventData) => {
           data.measurementId == '*') && consented) {
         BigQuery.insert(connectionInfo, rows, options)
           .then((success) => {
-            data.gtmOnSuccess();
+            log('success');
           }, (e) => {
             log(JSON.stringify(e));
-            data.gtmOnFailure();
           });
-      } else {
-        data.gtmOnSuccess();
       }
     }
   }
 });
+
+data.gtmOnSuccess();
 
 
 ___SERVER_PERMISSIONS___
