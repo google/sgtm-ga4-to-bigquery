@@ -113,6 +113,7 @@ const getRemoteAddress = require('getRemoteAddress');
 const getRequestHeader = require('getRequestHeader');
 const extractEventsFromMpv2 = require('extractEventsFromMpv2');
 const getRequestQueryParameters = require('getRequestQueryParameters');
+const getTimestampMillis = require('getTimestampMillis');
 
 addEventCallback((containerId, eventData) => {
   let skipWrite = false;
@@ -133,6 +134,7 @@ addEventCallback((containerId, eventData) => {
     // Check event is GA4
     if (isRequestMpv2()) {
       const rows = extractEventsFromMpv2();
+      rows[0].event_timestamp = getTimestampMillis() / 1000
       rows[0].event_params = [];
       rows[0].user_properties = [];
       rows[0].user_agent = getRequestHeader('user-agent');
