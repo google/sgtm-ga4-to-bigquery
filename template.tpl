@@ -47,14 +47,6 @@ ___TEMPLATE_PARAMETERS___
     "defaultValue": false
   },
   {
-    "type": "CHECKBOX",
-    "name": "requireConsent",
-    "checkboxText": "Use Consent Mode",
-    "simpleValueType": true,
-    "defaultValue": true,
-    "help": "Check this box to check if consent has been granted based on the GCS parameter added by consent mode."
-  },
-  {
     "type": "GROUP",
     "name": "bqSettings",
     "displayName": "BigQuery Settings",
@@ -113,6 +105,7 @@ const getRemoteAddress = require('getRemoteAddress');
 const getRequestHeader = require('getRequestHeader');
 const extractEventsFromMpv2 = require('extractEventsFromMpv2');
 const getRequestQueryParameters = require('getRequestQueryParameters');
+const getTimestampMillis = require('getTimestampMillis');
 
 addEventCallback((containerId, eventData) => {
   let skipWrite = false;
@@ -136,6 +129,7 @@ addEventCallback((containerId, eventData) => {
     // Check event is GA4
     if (isRequestMpv2()) {
       const rows = extractEventsFromMpv2();
+      rows[0].event_timestamp = getTimestampMillis() / 1000;
       rows[0].event_params = [];
       rows[0].user_properties = [];
       rows[0].user_agent = getRequestHeader('user-agent');
@@ -229,16 +223,9 @@ addEventCallback((containerId, eventData) => {
         rows[0][newParam] = rows[0][param];
       }
       rows[0].session_engagement = rows[0].seg;
-
-      let consented = false;
-      if (data.requireConsent == false) {
-        consented = true;
-      } else if (rows[0].gcs == 'G111') {
-				consented = true;
-			}
       
-      if ((rows[0].x_ga_measurement_id == data.measurementId ||
-          data.measurementId == '*') && consented) {
+      if (rows[0].x_ga_measurement_id == data.measurementId ||
+          data.measurementId == '*') {
         BigQuery.insert(connectionInfo, rows, options)
           .then((success) => {
             data.gtmOnSuccess();
