@@ -22,7 +22,7 @@ gcloud services enable bigquery.googleapis.com --async
 read -p "Please enter your GCP PROJECT ID: " project_id
 read -p "Please enter a new BigQuery dataset name (cannot include spaces): " dataset_id
 echo "~~~~~~~~ Creating BigQuery Dataset ~~~~~~~~~~"
-bq mk -d $project_id:analytics_settings_database
+bq mk -d $project_id:$dataset_id
 echo "~~~~~~~~ BigQuery Dataset Create ~~~~~~~~~~"
 read -p "Please enter a new BigQuery table name (cannot include spaces): " table_id
 echo "~~~~~~~~ Creating BigQuery Table ~~~~~~~~~~"

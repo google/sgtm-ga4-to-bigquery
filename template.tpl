@@ -47,14 +47,6 @@ ___TEMPLATE_PARAMETERS___
     "defaultValue": false
   },
   {
-    "type": "CHECKBOX",
-    "name": "requireConsent",
-    "checkboxText": "Use Consent Mode",
-    "simpleValueType": true,
-    "defaultValue": true,
-    "help": "Check this box to check if consent has been granted based on the GCS parameter added by consent mode."
-  },
-  {
     "type": "GROUP",
     "name": "bqSettings",
     "displayName": "BigQuery Settings",
@@ -228,16 +220,9 @@ addEventCallback((containerId, eventData) => {
         rows[0][newParam] = rows[0][param];
       }
       rows[0].session_engagement = rows[0].seg;
-
-      let consented = false;
-      if (data.requireConsent == false) {
-        consented = true;
-      } else if (rows[0].gcs == 'G111') {
-				consented = true;
-			}
       
-      if ((rows[0].x_ga_measurement_id == data.measurementId ||
-          data.measurementId == '*') && consented) {
+      if (rows[0].x_ga_measurement_id == data.measurementId ||
+          data.measurementId == '*') {
         BigQuery.insert(connectionInfo, rows, options)
           .then((success) => {
             log('success');
