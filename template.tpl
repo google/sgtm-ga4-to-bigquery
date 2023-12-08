@@ -217,6 +217,11 @@ addEventCallback((containerId, eventData) => {
         newParam = newParam.replace('x_ga_', '');
         newParam = newParam.replace('mp2_', '');
         newParam = newParam.replace('utm_', '');
+        
+        if (newParam === 'user_properties') {
+          continue;
+        }
+        
         rows[0][newParam] = rows[0][param];
       }
       rows[0].session_engagement = rows[0].seg;
