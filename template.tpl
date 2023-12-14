@@ -106,6 +106,8 @@ const getRequestHeader = require('getRequestHeader');
 const extractEventsFromMpv2 = require('extractEventsFromMpv2');
 const getRequestQueryParameters = require('getRequestQueryParameters');
 const getTimestampMillis = require('getTimestampMillis');
+const getEventData = require('getEventData');
+const parseUrl = require('parseUrl');
 
 addEventCallback((containerId, eventData) => {
   let skipWrite = false;
@@ -220,6 +222,13 @@ addEventCallback((containerId, eventData) => {
         rows[0][newParam] = rows[0][param];
       }
       rows[0].session_engagement = rows[0].seg;
+      
+      const pageLocation = parseUrl(getEventData('page_location'));
+      if (pageLocation && pageLocation.searchParams) {
+        rows[0].source = pageLocation.searchParams.utm_source;
+        rows[0].medium = pageLocation.searchParams.utm_medium;
+        rows[0].campaign = pageLocation.searchParams.utm_campaign;
+      }
       
       if (rows[0].x_ga_measurement_id == data.measurementId ||
           data.measurementId == '*') {
@@ -364,6 +373,39 @@ ___SERVER_PERMISSIONS___
         "versionId": "1"
       },
       "param": []
+    },
+    "isRequired": true
+  },
+  {
+    "instance": {
+      "key": {
+        "publicId": "read_event_data",
+        "versionId": "1"
+      },
+      "param": [
+        {
+          "key": "keyPatterns",
+          "value": {
+            "type": 2,
+            "listItem": [
+              {
+                "type": 1,
+                "string": "page_location"
+              }
+            ]
+          }
+        },
+        {
+          "key": "eventDataAccess",
+          "value": {
+            "type": 1,
+            "string": "specific"
+          }
+        }
+      ]
+    },
+    "clientAnnotations": {
+      "isEditedByUser": true
     },
     "isRequired": true
   }
